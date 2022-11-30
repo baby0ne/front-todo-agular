@@ -13,8 +13,6 @@ interface BaseResponse<D> {
 export interface Todo {
   id: string
   title: string
-  addedDate: string
-  order: string
 }
 
 @Injectable({
@@ -26,7 +24,8 @@ export class TodosService {
   httpOptions = {
     withCredentials: true,
     headers: {
-      'api-key': environment.apiKey,
+      //'api-key': environment.apiKey,
+      'Content-Type': 'application/json',
     },
   }
 
