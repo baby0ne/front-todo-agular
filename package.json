@@ -1,5 +1,6 @@
 {
   "name": "front",
+  "homepage": "https://baby0ne.github.io/front-todo-agular/",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -35,6 +36,7 @@
     "@types/jasmine": "~4.0.0",
     "@typescript-eslint/eslint-plugin": "5.44.0",
     "@typescript-eslint/parser": "5.44.0",
+    "angular-cli-ghpages": "^1.0.5",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
