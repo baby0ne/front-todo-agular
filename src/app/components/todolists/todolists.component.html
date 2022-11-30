@@ -1,0 +1,13 @@
+<div>
+  <input (keyup.enter)="createTodoHandler($event)" />
+</div>
+<div *ngIf="!!error; else content">
+  <h1>{{ error }}</h1>
+</div>
+<ng-template #content>
+  <div *ngFor="let todo of todos" class="todo">
+    title: {{ todo.title }} | added date: {{ todo.addedDate | date : 'shortDate' }} | order:
+    {{ todo.order }}
+    <button (click)="deleteTodo(todo.id)">delete</button>
+  </div>
+</ng-template>
