@@ -1,18 +1,19 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { BehaviorSubject, map } from 'rxjs'
+import { BehaviorSubject, catchError, EMPTY, map } from 'rxjs'
 import { environment } from '../../environments/environment'
 
 interface BaseResponse<D> {
   data: D
-  fieldsErrors: []
-  messages: []
-  resultCode: 0
+  fieldsErrors: string[]
+  messages: string[]
+  resultCode: number
 }
 
 export interface Todo {
-  id: string
+  id: number
   title: string
+  tasks: any
 }
 
 @Injectable({
@@ -22,31 +23,33 @@ export class TodosService {
   constructor(private http: HttpClient) {}
 
   httpOptions = {
-    withCredentials: true,
     headers: {
-      //'api-key': environment.apiKey,
-      'Content-Type': 'application/json',
+      // 'Access-Control-Allow-Origin': '*',
     },
   }
 
   todos$: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([])
 
   getTodos() {
-    this.http.get<Todo[]>(`${environment.baseUrl}/todo-lists`, this.httpOptions).subscribe(res => {
-      this.todos$.next(res)
-    })
+    this.http
+      .get<Todo[]>(`${environment.baseUrl}/todo-lists`, this.httpOptions)
+      .pipe(catchError(this.catchErrorHandler))
+      .subscribe(res => {
+        this.todos$.next(res)
+      })
   }
 
   createTodo(title: string) {
     this.http
-      .post<BaseResponse<{ item: Todo }>>(
-        `${environment.baseUrl}/todo-lists`,
-        { title },
-        this.httpOptions
-      )
+      .post<Todo>(`${environment.baseUrl}/todo-lists`, { title }, {})
       .pipe(
+        catchError(this.catchErrorHandler),
         map(res => {
-          const newTodo = res.data.item
+          const newTodo = {
+            id: res.id,
+            title: res.title,
+            tasks: res.tasks,
+          }
           const actualTodos = this.todos$.getValue()
 
           return [newTodo, ...actualTodos]
@@ -57,10 +60,11 @@ export class TodosService {
       })
   }
 
-  deleteTodo(todoId: string) {
+  deleteTodo(todoId: number) {
     this.http
       .delete<BaseResponse<{}>>(`${environment.baseUrl}/todo-lists/${todoId}`, this.httpOptions)
       .pipe(
+        catchError(this.catchErrorHandler),
         map(() => {
           const actualTodos = this.todos$.getValue()
           const filterTodos = actualTodos.filter(todo => todo.id !== todoId)
@@ -71,5 +75,24 @@ export class TodosService {
       .subscribe(res => {
         this.todos$.next(res)
       })
+  }
+
+  updateTodo(todoId: number, title: string) {
+    this.http
+      .patch(`${environment.baseUrl}/todo-lists/${todoId}`, { title }, this.httpOptions)
+      .pipe(
+        catchError(this.catchErrorHandler),
+        map(() => {
+          const actualTodos = this.todos$.getValue()
+          return actualTodos.map(tl => (tl.id === todoId ? { ...tl, title } : tl))
+        })
+      )
+      .subscribe(res => {
+        this.todos$.next(res)
+      })
+  }
+  private catchErrorHandler(err: HttpErrorResponse) {
+    console.log(err.message)
+    return EMPTY
   }
 }

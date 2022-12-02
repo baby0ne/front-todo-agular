@@ -21,32 +21,18 @@ export class TodolistsComponent implements OnInit {
 
   getTodos() {
     this.todosService.getTodos()
-    // this.todosService.getTodos().subscribe({
-    //   next: res => {
-    //     this.todos = res
-    //   },
-    //   error: (error: HttpErrorResponse) => {
-    //     this.error = error.message
-    //   },
-    // })
   }
 
   createTodo(title: string) {
     this.todosService.createTodo(title)
-    // this.todosService.createTodo(title).subscribe(res => {
-    //   if (res.resultCode === 0) {
-    //     this.todos.unshift(res.data.item)
-    //   }
-    // })
   }
 
-  deleteTodo(todoId: string) {
+  deleteTodo(todoId: number) {
     this.todosService.deleteTodo(todoId)
-    // this.todosService.deleteTodo(todoId).subscribe(res => {
-    //   if (res.resultCode === 0) {
-    //     this.todos = this.todos.filter(todo => todo.id !== todoId)
-    //   }
-    // })
+  }
+
+  updateTodo(todoId: number, title: string) {
+    this.todosService.updateTodo(todoId, title)
   }
 
   createTodoHandler($event: Event) {

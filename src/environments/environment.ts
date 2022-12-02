@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080',
-  apiKey: '76ca6c52-f24e-42fc-86f5-361b406922b4',
+  baseUrl: 'http://spring-boot-todo-serv.herokuapp.com',
 }
-
+//https://spring-boot-todo-serv.herokuapp.com
+//http://172.20.10.2:8080
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
