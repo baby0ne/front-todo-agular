@@ -1,20 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, catchError, EMPTY, map } from 'rxjs'
-import { environment } from '../../environments/environment'
-
-interface BaseResponse<D> {
-  data: D
-  fieldsErrors: string[]
-  messages: string[]
-  resultCode: number
-}
-
-export interface Todo {
-  id: number
-  title: string
-  tasks: any
-}
+import { environment } from '../../../environments/environment'
+import { BaseResponse, Todo } from '../models/todos.model'
 
 @Injectable({
   providedIn: 'root',
@@ -22,17 +10,11 @@ export interface Todo {
 export class TodosService {
   constructor(private http: HttpClient) {}
 
-  httpOptions = {
-    headers: {
-      // 'Access-Control-Allow-Origin': '*',
-    },
-  }
-
   todos$: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([])
 
   getTodos() {
     this.http
-      .get<Todo[]>(`${environment.baseUrl}/todo-lists`, this.httpOptions)
+      .get<Todo[]>(`${environment.baseUrl}/todo-lists`)
       .pipe(catchError(this.catchErrorHandler))
       .subscribe(res => {
         this.todos$.next(res)
@@ -62,14 +44,13 @@ export class TodosService {
 
   deleteTodo(todoId: number) {
     this.http
-      .delete<BaseResponse<{}>>(`${environment.baseUrl}/todo-lists/${todoId}`, this.httpOptions)
+      .delete<BaseResponse<{}>>(`${environment.baseUrl}/todo-lists/${todoId}`)
       .pipe(
         catchError(this.catchErrorHandler),
         map(() => {
           const actualTodos = this.todos$.getValue()
-          const filterTodos = actualTodos.filter(todo => todo.id !== todoId)
 
-          return filterTodos
+          return actualTodos.filter(todo => todo.id !== todoId)
         })
       )
       .subscribe(res => {
@@ -79,7 +60,7 @@ export class TodosService {
 
   updateTodo(todoId: number, title: string) {
     this.http
-      .patch(`${environment.baseUrl}/todo-lists/${todoId}`, { title }, this.httpOptions)
+      .patch(`${environment.baseUrl}/todo-lists/${todoId}`, { title })
       .pipe(
         catchError(this.catchErrorHandler),
         map(() => {

@@ -11,3 +11,7 @@
 .ng-pristine:not(form) {
   border-left: 5px solid rgba(190, 179, 179, 0.72);
 }
+
+body{
+  background-color: #4a4242;
+}
