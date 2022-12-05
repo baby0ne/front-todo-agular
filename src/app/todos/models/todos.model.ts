@@ -8,5 +8,20 @@ export interface BaseResponse<D> {
 export interface Todo {
   id: number
   title: string
-  tasks: any
+}
+
+export type FilterType = 'all' | 'active' | 'complete'
+
+export interface TodoDomainType extends Todo {
+  filter: FilterType
+}
+
+export interface Task {
+  id: number
+  task: string
+  active: boolean
+}
+
+export interface DomainTask {
+  [key: string]: Task[]
 }

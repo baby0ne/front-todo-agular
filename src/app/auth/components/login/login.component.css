@@ -1,0 +1,65 @@
+.login {
+  margin: 50px auto;
+  width: 400px;
+}
+.login-screen {
+  background-color: #FFF;
+  padding: 20px;
+  border-radius: 5px
+}
+
+.app-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-form {
+  text-align: center;
+}
+.control-group {
+  margin-bottom: 30px;
+}
+
+input {
+  text-align: center;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: 200;
+  padding: 10px 0;
+  width: 250px;
+  transition: border .5s;
+}
+
+input:focus {
+  border: 2px solid #dc3535;
+  box-shadow: none;
+  outline: none;
+}
+
+.btn {
+  border: 2px solid transparent;
+  background: #dc3535;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  display: block;
+  width: 250px;
+  margin: 0 auto;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+.error{
+  color: red;
+}

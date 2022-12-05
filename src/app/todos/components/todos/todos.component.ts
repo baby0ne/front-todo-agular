@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { TodosService } from '../../services/todos.service'
 import { Observable } from 'rxjs'
-import { Todo } from '../../models/todos.model'
+import { TodoDomainType } from '../../models/todos.model'
+import { AuthService } from '../../../core/services/auth.service'
 
 @Component({
   selector: 'todo-todos',
@@ -9,13 +10,31 @@ import { Todo } from '../../models/todos.model'
   styleUrls: ['./todos.component.css'],
 })
 export class TodosComponent implements OnInit {
-  constructor(private todosService: TodosService) {}
+  constructor(private todosService: TodosService, private authService: AuthService) {}
 
-  todos$: Observable<Todo[]> = new Observable<Todo[]>()
+  todos$: Observable<TodoDomainType[]> = new Observable<TodoDomainType[]>()
+  todoTitle!: string
 
   ngOnInit() {
     this.todosService.getTodos()
 
     this.todos$ = this.todosService.todos$
+  }
+
+  addTodoHandler() {
+    this.todosService.addTodo(this.todoTitle)
+    this.todoTitle = ''
+  }
+
+  deleteTodoHandler(todoId: number) {
+    this.todosService.deleteTodo(todoId)
+  }
+
+  editTodoHandler(payload: { todoId: number; title: string }) {
+    this.todosService.editTodo(payload.todoId, payload.title)
+  }
+
+  logoutHandler() {
+    this.authService.logout()
   }
 }

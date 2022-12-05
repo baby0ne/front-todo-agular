@@ -1,1 +1,31 @@
-<p>todo works!</p>
+<div class="wrapper">
+  <div class="todoHeader">
+    <input
+      *ngIf="isEditMode; else title"
+      (blur)="editTitleHandler()"
+      (keyup.enter)="editTitleHandler()"
+      [(ngModel)]="newTitle"
+      autofocus
+    />
+    <ng-template #title>
+      <header (dblclick)="activateEditMode()">{{ todo.title }}</header>
+    </ng-template>
+    <button (click)="deleteTodoHandler()">delete</button>
+  </div>
+  <div class="inputField">
+    <input
+      type="text"
+      placeholder="Add new task"
+      [(ngModel)]="newTaskTitle"
+      (keyup.enter)="addTaskHandler()"
+    />
+    <button class="addTaskButton" (click)="addTaskHandler()">+</button>
+  </div>
+  <div>
+    <todo-tasks [todoId]="todo.id"></todo-tasks>
+  </div>
+  <todo-tasks-filter
+    (changeFilterEvent)="changeFilterHandler($event)"
+    [filter]="todo.filter"
+  ></todo-tasks-filter>
+</div>

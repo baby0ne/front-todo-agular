@@ -1,0 +1,70 @@
+.content {
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+.inputField{
+  height: 45px;
+  margin-bottom: 30px;
+}
+.inputField input{
+  position: relative;
+  max-width: 400px;
+  height: 100%;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 17px;
+  padding-left: 15px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  top: -7px;
+}
+.inputField input:focus{
+  border-color: #dc3535;
+}
+.inputField .addTodoButton{
+  width: 50px;
+  height: 100%;
+  border: none;
+  color: #fff;
+  margin-left: 5px;
+  outline: none;
+  background: #dc3535;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 35px;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+.inputField button:hover,
+.footer button:hover{
+  opacity: 1;
+}
+.inputField button.active{
+  opacity: 1;
+  pointer-events: auto;
+}
+.btn {
+  border: 2px solid transparent;
+  background: #dc3535;
+  color: #ffffff;
+  font-size: 16px;
+  height: 45px;
+  padding: 10px 10px;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 1;
+}

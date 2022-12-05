@@ -1,0 +1,50 @@
+<div class="login">
+  <div class="login-screen">
+    <div class="app-title">
+      <h1>Login</h1>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <div class="login-form">
+        <div class="control-group">
+          <input
+            type="text"
+            class="login-field"
+            value=""
+            placeholder="Email"
+            id="login-name"
+            formControlName="email"
+          />
+          <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="error">
+            <div *ngIf="email!.errors?.['required']">Email is required.</div>
+            <div *ngIf="email!.errors?.['pattern']">Email is not correct.</div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <input
+            type="password"
+            class="login-field"
+            value=""
+            placeholder="Password"
+            id="login-pass"
+            formControlName="password"
+          />
+          <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="error">
+            <div *ngIf="password!.errors?.['required']">Password is required.</div>
+            <div *ngIf="password!.errors?.['minlength']">
+              Password must be at least 8 characters long.
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-primary btn-large btn-block"
+          type="submit"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
