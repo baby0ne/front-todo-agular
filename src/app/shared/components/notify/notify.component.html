@@ -1,0 +1,6 @@
+<div *ngIf="notify$ | async; let notify" [ngClass]="{ modal: !notify, 'show-modal': notify }">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeNotification()">×</span>
+    <h1>{{ notify$ | async }}</h1>
+  </div>
+</div>
