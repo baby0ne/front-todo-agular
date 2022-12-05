@@ -1,0 +1,7 @@
+<todo-task
+  (deleteTaskEvent)="deleteTaskHandler($event)"
+  (updateTaskActiveEvent)="updateTaskActiveHandler($event)"
+  (updateTaskTitleEvent)="updateTaskTitleHandler($event)"
+  *ngFor="let task of tasks$ | async"
+  [task]="task"
+></todo-task>
