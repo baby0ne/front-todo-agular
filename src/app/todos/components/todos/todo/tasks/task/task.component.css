@@ -1,8 +1,41 @@
 .task{
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
 }
 .container{
   display: flex;
   flex-wrap: nowrap;
+}
+.activeTaskTitle{
+  position: relative;
+  top: 8px;
+}
+.completeTaskTitle{
+  position: relative;
+  top: 8px;
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.taskButton{
+  width: 50px;
+  height: 100%;
+  border: none;
+  color: #fff;
+  margin-left: 5px;
+  outline: none;
+  background: #dc3535;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 35px;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+button:hover {
+  opacity: 1;
+}
+input[type="checkbox"]{
+  margin-right: 5px;
 }

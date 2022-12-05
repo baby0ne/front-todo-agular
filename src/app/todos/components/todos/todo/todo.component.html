@@ -5,12 +5,13 @@
       (blur)="editTitleHandler()"
       (keyup.enter)="editTitleHandler()"
       [(ngModel)]="newTitle"
+      class="headerInputField"
       autofocus
     />
     <ng-template #title>
       <header (dblclick)="activateEditMode()">{{ todo.title }}</header>
     </ng-template>
-    <button (click)="deleteTodoHandler()">delete</button>
+    <button (click)="deleteTodoHandler()" class="taskButton">X</button>
   </div>
   <div class="inputField">
     <input
@@ -19,7 +20,7 @@
       [(ngModel)]="newTaskTitle"
       (keyup.enter)="addTaskHandler()"
     />
-    <button class="addTaskButton" (click)="addTaskHandler()">+</button>
+    <button class="taskButton" (click)="addTaskHandler()">+</button>
   </div>
   <div>
     <todo-tasks [todoId]="todo.id"></todo-tasks>

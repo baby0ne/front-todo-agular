@@ -1,6 +1,14 @@
 <div class="task">
   <div class="container">
     <input type="checkbox" (click)="updateTaskActiveHandler($event)" [checked]="task.active" />
+    <ng-template #title>
+      <h3
+        (dblclick)="activateEditMode()"
+        [ngClass]="{ activeTaskTitle: !task.active, completeTaskTitle: task.active }"
+      >
+        {{ task.task }}
+      </h3>
+    </ng-template>
     <input
       *ngIf="isEditMode; else title"
       (blur)="editTaskTitleHandler()"
@@ -8,9 +16,6 @@
       [(ngModel)]="newTitle"
       autofocus
     />
-    <ng-template #title>
-      <p (dblclick)="activateEditMode()">{{ task.task }}</p>
-    </ng-template>
   </div>
-  <button (click)="deleteTaskHandler()">delete task</button>
+  <button (click)="deleteTaskHandler()" class="taskButton">x</button>
 </div>

@@ -24,10 +24,10 @@ export class TasksComponent implements OnInit {
         const activeTodo = todos.find(tl => tl.id === this.todoId)
 
         if (activeTodo?.filter === 'complete') {
-          tasksForTodo = tasksForTodo.filter(task => task.active === false)
+          tasksForTodo = tasksForTodo.filter(task => task.active === true)
         }
         if (activeTodo?.filter === 'active') {
-          tasksForTodo = tasksForTodo.filter(task => task.active === true)
+          tasksForTodo = tasksForTodo.filter(task => task.active === false)
         }
 
         return tasksForTodo

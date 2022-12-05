@@ -21,7 +21,7 @@ export class TaskComponent {
 
   updateTaskActiveHandler(event: MouseEvent) {
     const newActive = (event.currentTarget as HTMLInputElement).checked
-
+    debugger
     this.updateTaskActiveEvent.emit({ taskId: this.task.id, newActive })
   }
 
