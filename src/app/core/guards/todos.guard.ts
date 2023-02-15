@@ -5,17 +5,17 @@ import { AuthService } from '../services/auth.service'
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class TodosGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     await this.authService.authRequest
     const isAuth = this.authService.isAuth$.getValue()
 
-    if (!isAuth) {
-      this.router.navigate(['/login'])
+    if (isAuth) {
+      this.router.navigate([''])
     }
 
-    return isAuth
+    return !isAuth
   }
 }

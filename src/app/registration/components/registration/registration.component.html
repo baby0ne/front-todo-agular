@@ -1,9 +1,9 @@
 <div class="login">
   <div class="login-screen">
     <div class="app-title">
-      <h1>Login</h1>
+      <h1>Registration</h1>
     </div>
-    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" (keydown.enter)="onLoginSubmit()">
+    <form [formGroup]="registrationForm" (ngSubmit)="onRegistrationSubmit()">
       <div class="login-form">
         <div class="control-group">
           <input
@@ -36,15 +36,41 @@
             </div>
           </div>
         </div>
+
+        <div class="control-group">
+          <input
+            type="password"
+            class="login-field"
+            value=""
+            placeholder="Repeat password"
+            id="repeat-login-pass"
+            formControlName="repeatPassword"
+          />
+          <div
+            *ngIf="
+              (repeatPassword!.invalid && (repeatPassword!.dirty || repeatPassword!.touched)) ||
+              (password!.value !== repeatPassword!.value &&
+                (repeatPassword!.dirty || repeatPassword!.touched))
+            "
+            class="error"
+          >
+            <div *ngIf="repeatPassword!.errors?.['required']">Repeat password is required.</div>
+            <div *ngIf="repeatPassword!.errors?.['minlength']">
+              Password must be at least 8 characters long.
+            </div>
+            <div *ngIf="password!.value !== repeatPassword!.value">Password mismatch.</div>
+          </div>
+        </div>
+
         <button
           class="btn btn-primary btn-large btn-block"
           type="submit"
-          [disabled]="loginForm.invalid"
+          [disabled]="registrationForm.invalid || password!.value !== repeatPassword!.value"
         >
-          Login
+          Registration
         </button>
-        <div class="toRegistration">
-          <a routerLink="/registration">Not registered?</a>
+        <div class="toLogin">
+          <a routerLink="/login">Already registered?</a>
         </div>
       </div>
     </form>

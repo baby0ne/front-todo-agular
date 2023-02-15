@@ -10,7 +10,7 @@ interface AuthResponse {
   id: number
   email: string
   password: string
-  active: boolean
+  'jwt-token': string
 }
 
 @Injectable()
@@ -28,35 +28,32 @@ export class AuthService {
   })
 
   isAuth$ = new BehaviorSubject<boolean>(false)
+  token$ = new BehaviorSubject<string | null>(null)
 
   login(payload: Partial<Login>) {
     this.http
-      .post<AuthResponse>(`${environment.baseUrl}/auth/login`, payload)
-      .pipe(catchError(this.ErrorHandler.bind(this)))
+      .post<AuthResponse>(`${environment.baseUrl}/auth/login`, payload, {})
+      .pipe(catchError(this.errorHandler.bind(this)))
       .subscribe(res => {
-        this.isAuth$.next(res.active)
+        localStorage.setItem('jwt-token', res['jwt-token'])
+        this.isAuth$.next(true)
         this.router.navigate([''])
       })
   }
 
   logout() {
-    this.http
-      .post<AuthResponse>(`${environment.baseUrl}/auth/logout`, { id: 1 })
-      .pipe(catchError(this.ErrorHandler.bind(this)))
-      .subscribe(res => {
-        this.isAuth$.next(res.active)
-        this.router.navigate(['/login'])
-      })
+    localStorage.removeItem('jwt-token')
+    this.isAuth$.next(false)
+    this.router.navigate(['login'])
   }
 
   me() {
-    this.http.get<AuthResponse>(`${environment.baseUrl}/auth/me`).subscribe(res => {
-      this.isAuth$.next(res.active)
-      this.resolveAuthRequest()
-    })
+    this.resolveAuthRequest()
+    this.token$.next(localStorage.getItem('jwt-token'))
+    this.isAuth$.next(this.token$.getValue() !== null)
   }
 
-  private ErrorHandler(error: HttpErrorResponse) {
+  private errorHandler(error: HttpErrorResponse) {
     this.notificationService.handleError(error.message)
     return EMPTY
   }

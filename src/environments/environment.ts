@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://spring-boot-todo-serv.herokuapp.com',
+  baseUrl: 'http://172.20.10.2:8080',
 }
+
+//baseUrl:'https://spring-boot-todo-serv.herokuapp.com',
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -64,11 +64,11 @@ input:focus {
   color: red;
 }
 
-.toRegistration{
+.toLogin {
   color: #000;
   margin-top: 15px;
 }
 
-.toRegistration a{
+.toLogin a{
   color: #000;
 }

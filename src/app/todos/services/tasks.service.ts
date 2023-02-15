@@ -3,19 +3,20 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
 import { BehaviorSubject, catchError, EMPTY, map } from 'rxjs'
 import { DomainTask, Task } from '../models/todos.model'
+import { NotificationService } from '../../core/services/notification.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private notificationService: NotificationService) {}
 
   tasks$ = new BehaviorSubject<DomainTask>({})
 
   getTasks(todoId: number) {
     this.http
       .get<Task[]>(`${environment.baseUrl}/todo-lists/${todoId}/tasks`)
-      .pipe(catchError(this.catchErrorHandler))
+      .pipe(catchError(this.errorHandler.bind(this)))
       .subscribe(res => {
         const stateTasks = this.tasks$.getValue()
         stateTasks[todoId] = res
@@ -28,7 +29,7 @@ export class TasksService {
     this.http
       .post<Task>(`${environment.baseUrl}/todo-lists/${todoId}/tasks`, { task: title })
       .pipe(
-        catchError(this.catchErrorHandler),
+        catchError(this.errorHandler.bind(this)),
         map(res => {
           const newTask = res
           const actualTasks = this.tasks$.getValue()
@@ -45,6 +46,7 @@ export class TasksService {
     this.http
       .delete(`${environment.baseUrl}/todo-lists/${todoId}/tasks/${taskId}`)
       .pipe(
+        catchError(this.errorHandler.bind(this)),
         map(() => {
           const actualTasks = this.tasks$.getValue()
           actualTasks[todoId] = actualTasks[todoId].filter(task => task.id !== taskId)
@@ -68,6 +70,7 @@ export class TasksService {
         title ? { task: title, active: mainTask?.active } : { task: mainTask?.task, active }
       )
       .pipe(
+        catchError(this.errorHandler.bind(this)),
         map(res => {
           const actualTasks = this.tasks$.getValue()
           actualTasks[todoId] = actualTasks[todoId].map(task =>
@@ -81,8 +84,8 @@ export class TasksService {
       })
   }
 
-  private catchErrorHandler(err: HttpErrorResponse) {
-    console.log(err.message)
+  private errorHandler(error: HttpErrorResponse) {
+    this.notificationService.handleError(error.message)
     return EMPTY
   }
 }

@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject, catchError, EMPTY, map } from 'rxjs'
 import { environment } from '../../../environments/environment'
 import { FilterType, Todo, TodoDomainType } from '../models/todos.model'
+import { NotificationService } from '../../core/services/notification.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodosService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private notificationService: NotificationService) {}
 
   todos$: BehaviorSubject<TodoDomainType[]> = new BehaviorSubject<TodoDomainType[]>([])
 
@@ -16,7 +17,7 @@ export class TodosService {
     this.http
       .get<Todo[]>(`${environment.baseUrl}/todo-lists`)
       .pipe(
-        catchError(this.catchErrorHandler),
+        catchError(this.errorHandler.bind(this)),
         map(res => {
           const newTodos: TodoDomainType[] = res.map(tl => ({ ...tl, filter: 'all' }))
           return newTodos
@@ -31,7 +32,7 @@ export class TodosService {
     this.http
       .post<Todo>(`${environment.baseUrl}/todo-lists`, { title }, {})
       .pipe(
-        catchError(this.catchErrorHandler),
+        catchError(this.errorHandler.bind(this)),
         map(res => {
           const newTodo: TodoDomainType = {
             id: res.id,
@@ -52,7 +53,7 @@ export class TodosService {
     this.http
       .delete(`${environment.baseUrl}/todo-lists/${todoId}`)
       .pipe(
-        catchError(this.catchErrorHandler),
+        catchError(this.errorHandler.bind(this)),
         map(() => {
           const actualTodos = this.todos$.getValue()
 
@@ -68,7 +69,7 @@ export class TodosService {
     this.http
       .patch(`${environment.baseUrl}/todo-lists/${todoId}`, { title })
       .pipe(
-        catchError(this.catchErrorHandler),
+        catchError(this.errorHandler.bind(this)),
         map(() => {
           const actualTodos = this.todos$.getValue()
           return actualTodos.map(tl => (tl.id === todoId ? { ...tl, title } : tl))
@@ -87,8 +88,8 @@ export class TodosService {
     this.todos$.next(newTodos)
   }
 
-  private catchErrorHandler(err: HttpErrorResponse) {
-    console.log(err.message)
+  private errorHandler(error: HttpErrorResponse) {
+    this.notificationService.handleError(error.message)
     return EMPTY
   }
 }

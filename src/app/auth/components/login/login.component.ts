@@ -3,13 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../../core/services/auth.service'
 
 @Component({
-  selector: 'todo-login',
+  selector: 'todo-registration',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   constructor(private authService: AuthService) {}
-
   loginForm = new FormGroup({
     email: new FormControl<string>('', {
       nonNullable: true,
@@ -33,8 +32,9 @@ export class LoginComponent {
   }
 
   onLoginSubmit() {
-    const value = this.loginForm.value
-
-    this.authService.login(value)
+    this.authService.login({
+      username: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+    })
   }
 }
