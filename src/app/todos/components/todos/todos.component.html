@@ -1,21 +1,22 @@
-<div class="header">
-  <div class="inputField">
-    <input
-      placeholder="Add new todolist"
-      (keyup.enter)="addTodoHandler()"
-      [(ngModel)]="todoTitle"
-    />
-    <button (click)="addTodoHandler()" class="addTodoButton">+</button>
+<div class="mainBox">
+  <div class="header">
+    <div class="inputField">
+      <mat-form-field color="primary" class="defaultInput">
+        <mat-label class="inputLabel">Todolist title</mat-label>
+        <input matInput (keyup.enter)="addTodoHandler()" [(ngModel)]="todoTitle" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="btn" (click)="addTodoHandler()">
+        <mat-icon>add_task</mat-icon>
+      </button>
+    </div>
   </div>
-  <button class="btn btn-primary btn-large btn-block" type="submit" (click)="logoutHandler()">
-    Logout
-  </button>
-</div>
-<div class="content">
-  <todo-todo
-    *ngFor="let todo of todos$ | async"
-    [todo]="todo"
-    (deleteTodoEvent)="deleteTodoHandler($event)"
-    (editTitleEvent)="editTodoHandler($event)"
-  ></todo-todo>
+  <div class="content">
+    <todo-todo
+      *ngFor="let todo of todos$ | async"
+      [todo]="todo"
+      (deleteTodoEvent)="deleteTodoHandler($event)"
+      (editTitleEvent)="editTodoHandler($event)"
+      cdkDrag
+    ></todo-todo>
+  </div>
 </div>

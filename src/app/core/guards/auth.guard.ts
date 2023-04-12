@@ -10,12 +10,19 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     await this.authService.authRequest
-    const isAuth = this.authService.isAuth$.getValue()
+    let isAuth: boolean
 
-    if (!isAuth) {
-      this.router.navigate(['/login'])
-    }
+    const subscribe = this.authService.isAuth$.subscribe(res => {
+      isAuth = res.valueOf()
 
+      if (!isAuth) {
+        this.router.navigate(['/login'])
+      }
+    })
+
+    subscribe.unsubscribe()
+
+    // @ts-ignore
     return isAuth
   }
 }

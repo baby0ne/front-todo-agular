@@ -9,9 +9,10 @@ import { NotificationService } from '../../core/services/notification.service'
   providedIn: 'root',
 })
 export class TodosService {
-  constructor(private http: HttpClient, private notificationService: NotificationService) {}
+  private _todos$: BehaviorSubject<TodoDomainType[]> = new BehaviorSubject<TodoDomainType[]>([])
+  todos$ = this._todos$.asObservable()
 
-  todos$: BehaviorSubject<TodoDomainType[]> = new BehaviorSubject<TodoDomainType[]>([])
+  constructor(private http: HttpClient, private notificationService: NotificationService) {}
 
   getTodos() {
     this.http
@@ -23,8 +24,10 @@ export class TodosService {
           return newTodos
         })
       )
-      .subscribe((res: TodoDomainType[]) => {
-        this.todos$.next(res)
+      .subscribe({
+        next: (res: TodoDomainType[]) => {
+          this._todos$.next(res)
+        },
       })
   }
 
@@ -39,13 +42,13 @@ export class TodosService {
             title: res.title,
             filter: 'all',
           }
-          const actualTodos = this.todos$.getValue()
+          const actualTodos = this._todos$.getValue()
 
           return [newTodo, ...actualTodos]
         })
       )
       .subscribe((res: TodoDomainType[]) => {
-        this.todos$.next(res)
+        this._todos$.next(res)
       })
   }
 
@@ -55,13 +58,13 @@ export class TodosService {
       .pipe(
         catchError(this.errorHandler.bind(this)),
         map(() => {
-          const actualTodos = this.todos$.getValue()
+          const actualTodos = this._todos$.getValue()
 
           return actualTodos.filter(todo => todo.id !== todoId)
         })
       )
       .subscribe(res => {
-        this.todos$.next(res)
+        this._todos$.next(res)
       })
   }
 
@@ -71,25 +74,25 @@ export class TodosService {
       .pipe(
         catchError(this.errorHandler.bind(this)),
         map(() => {
-          const actualTodos = this.todos$.getValue()
+          const actualTodos = this._todos$.getValue()
           return actualTodos.map(tl => (tl.id === todoId ? { ...tl, title } : tl))
         })
       )
       .subscribe(res => {
-        this.todos$.next(res)
+        this._todos$.next(res)
       })
   }
 
   changeFilter(todoId: number, filter: FilterType) {
-    const actualTodos = this.todos$.getValue()
+    const actualTodos = this._todos$.getValue()
 
     const newTodos = actualTodos.map(todo => (todo.id === todoId ? { ...todo, filter } : todo))
 
-    this.todos$.next(newTodos)
+    this._todos$.next(newTodos)
   }
 
   private errorHandler(error: HttpErrorResponse) {
-    this.notificationService.handleError(error.message)
+    this.notificationService.handleError(error.error)
     return EMPTY
   }
 }

@@ -1,14 +1,18 @@
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../../core/services/auth.service'
+import { AppService } from '../../../app.service'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'todo-registration',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.css', '../../../shared/styles.css'],
 })
 export class LoginComponent {
-  constructor(private authService: AuthService) {}
+  isLoading$: Observable<boolean> = new Observable<boolean>()
+
+  constructor(private authService: AuthService, private appService: AppService) {}
   loginForm = new FormGroup({
     email: new FormControl<string>('', {
       nonNullable: true,
@@ -32,6 +36,8 @@ export class LoginComponent {
   }
 
   onLoginSubmit() {
+    this.isLoading$ = this.appService.isLoading$
+
     this.authService.login({
       username: this.loginForm.value.email,
       password: this.loginForm.value.password,

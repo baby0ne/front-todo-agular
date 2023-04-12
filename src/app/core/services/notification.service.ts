@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
+import { AppService } from '../../app.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Injectable()
 export class NotificationService {
-  notify$ = new BehaviorSubject<string | null>(null)
+  constructor(private _snackBar: MatSnackBar) {}
+  error!: string
 
-  handleError(message: string) {
-    this.notify$.next(message)
-  }
-
-  clear() {
-    this.notify$.next(null)
+  handleError(error: any) {
+    if (error.message) {
+      this.error = error.message
+    } else {
+      this.error = error.violations[0].message
+    }
+    this._snackBar.open(this.error, '✖', {
+      duration: 5000,
+      horizontalPosition: 'left',
+    })
   }
 }

@@ -1,0 +1,22 @@
+<div class="profile">
+  <mat-card>
+    <div class="profileScreen">
+      <div
+        [ngStyle]="{ 'background-image': 'url(' + (profile$ | async)?.picture + ')' }"
+        class="profileAva"
+      ></div>
+      <h2 class="profileName">
+        {{ (profile$ | async)?.username }}
+      </h2>
+      <div class="profileStats">
+        <p>
+          Total todolists: <span>{{ profile.todoCount }}</span>
+        </p>
+        <p>
+          Total/Completed tasks:
+          <span>{{ profile.taskCount }}/{{ profile.taskCompleted }}</span>
+        </p>
+      </div>
+    </div>
+  </mat-card>
+</div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AuthService } from './core/services/auth.service'
+import { Observable } from 'rxjs'
+import { AppService } from './app.service'
 
 @Component({
   selector: 'todo-root',
@@ -7,9 +9,12 @@ import { AuthService } from './core/services/auth.service'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private appService: AppService) {}
+
+  isLoading$!: Observable<boolean>
 
   ngOnInit() {
+    this.isLoading$ = this.appService.isLoading$
     this.authService.me()
   }
 }

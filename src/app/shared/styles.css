@@ -1,0 +1,45 @@
+.btn{
+  height: 40px;
+}
+.defaultInput{
+  margin-right: 10px;
+  font-size: 16px;
+}
+.formInput{
+  width: 80%;
+  font-size: 18px;
+}
+.formButton{
+  width: 80%;
+  font-size: 18px;
+}
+.profile {
+  margin: 50px auto;
+  width: 400px;
+}
+.profile h2{
+  font-family: "Josefin Sans", serif;
+  font-size: 24px;
+}
+.profileStats{
+  font-size: 18px;
+}
+.profileStats span{
+  color: #3f51b5;
+}
+.profileScreen {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profileAva{
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-size: cover;
+}
+.profileName{
+  margin-top: 15px;
+  cursor: pointer;
+}

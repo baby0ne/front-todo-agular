@@ -6,7 +6,7 @@ import { TodosService } from '../../../services/todos.service'
 @Component({
   selector: 'todo-todo',
   templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css'],
+  styleUrls: ['./todo.component.css', '../../../../shared/styles.css'],
 })
 export class TodoComponent {
   @Input() todo!: TodoDomainType

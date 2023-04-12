@@ -1,0 +1,58 @@
+<mat-card class="registration">
+  <div class="registration-screen">
+    <div class="app-title">
+      <h1>Registration</h1>
+    </div>
+    <form [formGroup]="registrationForm" (ngSubmit)="onRegistrationSubmit()">
+      <div class="login-form">
+        <mat-form-field class="formInput">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" />
+          <mat-error *ngIf="email!.errors?.['pattern']">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="email!.errors?.['required']"> Email is required </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="formInput">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput formControlName="password" />
+          <mat-error *ngIf="password!.errors?.['required']">Password is required.</mat-error>
+          <mat-error *ngIf="password!.errors?.['minlength']">
+            Password must be at least 8 characters long.</mat-error
+          >
+        </mat-form-field>
+
+        <div class="control-group">
+          <mat-form-field class="formInput">
+            <mat-label>Repeat password</mat-label>
+            <input type="password" matInput formControlName="repeatPassword" />
+            <mat-error *ngIf="repeatPassword!.errors?.['required']"
+              >Repeat password is required.</mat-error
+            >
+            <mat-error *ngIf="password!.value !== repeatPassword!.value">
+              Password mismatch.</mat-error
+            >
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="
+            registrationForm.invalid ||
+            password!.value !== repeatPassword!.value ||
+            (isLoading$ | async)
+          "
+          class="formButton"
+        >
+          Registration
+        </button>
+        <div class="toLogin">
+          <a routerLink="/login">Already registered?</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-card>

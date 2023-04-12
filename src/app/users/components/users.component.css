@@ -1,0 +1,28 @@
+.usersPage{
+  padding-bottom: 20px;
+}
+.filterField{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.usersFindInput{
+  font-size: 18px;
+  width: 400px;
+  margin-right: 10px;
+}
+.usersContainer{}
+.usersContainer a{
+  text-decoration: none;
+  color: black;
+}
+.userContainer {
+  margin-bottom: 10px;
+}
+.miniAva{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-size: cover;
+  margin-right: 20px;
+}

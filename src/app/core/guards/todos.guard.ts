@@ -9,13 +9,13 @@ export class TodosGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    await this.authService.authRequest
-    const isAuth = this.authService.isAuth$.getValue()
+    let isAuth: boolean
 
-    if (isAuth) {
-      this.router.navigate([''])
-    }
+    const subscribe = this.authService.isAuth$.subscribe(res => {
+      isAuth = res.valueOf()
+    })
 
+    //@ts-ignore
     return !isAuth
   }
 }

@@ -1,0 +1,49 @@
+<div class="profile">
+  <mat-card>
+    <div class="profileScreen">
+      <div
+        [ngStyle]="{ 'background-image': 'url(' + (myProfile$ | async)?.picture + ')' }"
+        class="profileAva"
+      >
+        <div class="image-upload">
+          <label for="file-input">
+            <mat-icon class="imageUpload">add_photo_alternate</mat-icon>
+          </label>
+          <input
+            id="file-input"
+            type="file"
+            (change)="setNewProfileImageHandler($event)"
+            class="noneInput"
+          />
+        </div>
+      </div>
+      <mat-form-field *ngIf="isEditMode; else title" class="changeTitleInput" autofocus>
+        <mat-label>Your new name</mat-label>
+        <input
+          matInput
+          [(ngModel)]="newName"
+          (keyup.enter)="setNewProfileNameHandler()"
+          (blur)="setNewProfileNameHandler()"
+          autofocus
+        />
+      </mat-form-field>
+      <ng-template #title>
+        <h2 (dblclick)="activateEditMode()" class="profileName">
+          {{ (myProfile$ | async)?.username }}
+        </h2>
+      </ng-template>
+      <div class="profileStats">
+        <p>
+          Total todolists: <span>{{ myProfile.todoCount }}</span>
+        </p>
+        <p>
+          Total/Completed tasks:
+          <span>{{ myProfile.taskCount }}/{{ myProfile.taskCompleted }}</span>
+        </p>
+      </div>
+      <button mat-raised-button color="primary" class="logoutButton" (click)="logoutHandler()">
+        Logout
+      </button>
+    </div>
+  </mat-card>
+</div>

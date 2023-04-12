@@ -1,20 +1,12 @@
 <div class="container">
-  <button
-    [ngClass]="{ activeFilterButton: filter === 'all', filterButton: filter !== 'all' }"
-    (click)="changeFilterHandler('all')"
+  <mat-button-toggle-group
+    name="taskFilter"
+    class="buttonGroup"
+    value="{{ filter }}"
+    (change)="onToggleGroupChange($event)"
   >
-    All
-  </button>
-  <button
-    [ngClass]="{ activeFilterButton: filter === 'active', filterButton: filter !== 'active' }"
-    (click)="changeFilterHandler('active')"
-  >
-    Active
-  </button>
-  <button
-    [ngClass]="{ activeFilterButton: filter === 'complete', filterButton: filter !== 'complete' }"
-    (click)="changeFilterHandler('complete')"
-  >
-    Complete
-  </button>
+    <mat-button-toggle value="all" class="buttonToggle">All</mat-button-toggle>
+    <mat-button-toggle value="active" class="buttonToggle">Active</mat-button-toggle>
+    <mat-button-toggle value="complete" class="buttonToggle">Complete</mat-button-toggle>
+  </mat-button-toggle-group>
 </div>

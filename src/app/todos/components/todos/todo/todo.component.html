@@ -1,26 +1,30 @@
 <div class="wrapper">
   <div class="todoHeader">
-    <input
-      *ngIf="isEditMode; else title"
-      (blur)="editTitleHandler()"
-      (keyup.enter)="editTitleHandler()"
-      [(ngModel)]="newTitle"
-      class="headerInputField"
-      autofocus
-    />
+    <mat-form-field *ngIf="isEditMode; else title" class="changeTitleInput" autofocus>
+      <mat-label>New todolist title</mat-label>
+      <input
+        matInput
+        [(ngModel)]="newTitle"
+        (keyup.enter)="editTitleHandler()"
+        (blur)="editTitleHandler()"
+        autofocus
+      />
+    </mat-form-field>
     <ng-template #title>
-      <header (dblclick)="activateEditMode()">{{ todo.title }}</header>
+      <h1 (dblclick)="activateEditMode()">{{ todo.title }}</h1>
     </ng-template>
-    <button (click)="deleteTodoHandler()" class="taskButton">&times;</button>
+    <button mat-mini-fab color="primary" (click)="deleteTodoHandler()">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
   <div class="inputField">
-    <input
-      type="text"
-      placeholder="Add new task"
-      [(ngModel)]="newTaskTitle"
-      (keyup.enter)="addTaskHandler()"
-    />
-    <button class="taskButton" (click)="addTaskHandler()">+</button>
+    <mat-form-field color="primary" class="taskTitleInput">
+      <mat-label class="inputLabel">Task title</mat-label>
+      <input matInput (keyup.enter)="addTaskHandler()" [(ngModel)]="newTaskTitle" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addTaskHandler()">
+      <mat-icon>plus_one</mat-icon>
+    </button>
   </div>
   <div>
     <todo-tasks [todoId]="todo.id"></todo-tasks>

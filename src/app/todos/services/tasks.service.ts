@@ -4,14 +4,19 @@ import { environment } from '../../../environments/environment'
 import { BehaviorSubject, catchError, EMPTY, map } from 'rxjs'
 import { DomainTask, Task } from '../models/todos.model'
 import { NotificationService } from '../../core/services/notification.service'
+import { AppService } from '../../app.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  constructor(private http: HttpClient, private notificationService: NotificationService) {}
+  constructor(
+    private http: HttpClient,
+    private notificationService: NotificationService,
+    private appService: AppService
+  ) {}
 
-  tasks$ = new BehaviorSubject<DomainTask>({})
+  tasks$: BehaviorSubject<DomainTask> = new BehaviorSubject<DomainTask>({})
 
   getTasks(todoId: number) {
     this.http
@@ -85,7 +90,7 @@ export class TasksService {
   }
 
   private errorHandler(error: HttpErrorResponse) {
-    this.notificationService.handleError(error.message)
+    this.notificationService.handleError(error.error)
     return EMPTY
   }
 }

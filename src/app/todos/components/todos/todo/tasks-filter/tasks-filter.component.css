@@ -1,43 +1,8 @@
 .container{
-  display: flex;
-  justify-content: space-between;
   margin-top: 20px;
+  text-align: center;
 }
 
-.activeFilter{
-  background-color: #d85959;
-}
-
-.activeFilterButton{
-  width: 100px;
-  height: 100%;
-  border: none;
-  color: black;
-  margin-left: 5px;
-  outline: none;
-  background: #dc3535;
-  cursor: pointer;
-  border-radius: 3px;
-  font-size: 20px;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-  padding: 5px;
-}
-.filterButton{
-  width: 100px;
-  height: 100%;
-  border: none;
-  color: black;
-  margin-left: 5px;
-  outline: none;
-  background: #dad5d5;
-  cursor: pointer;
-  border-radius: 3px;
-  font-size: 20px;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-  padding: 5px;
-}
-button:hover {
-  opacity: 1;
+.buttonToggle{
+  width: 115px;
 }

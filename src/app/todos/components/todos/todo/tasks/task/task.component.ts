@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Task } from '../../../../../models/todos.model'
+import { MatCheckboxChange } from '@angular/material/checkbox'
 
 @Component({
   selector: 'todo-task',
@@ -19,8 +20,8 @@ export class TaskComponent {
     this.deleteTaskEvent.emit(this.task.id)
   }
 
-  updateTaskActiveHandler(event: MouseEvent) {
-    const newActive = (event.currentTarget as HTMLInputElement).checked
+  updateTaskActiveHandler(event: MatCheckboxChange) {
+    const newActive = event.checked
     this.updateTaskActiveEvent.emit({ taskId: this.task.id, newActive })
   }
 

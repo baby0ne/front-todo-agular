@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
-import { Login } from '../models/auth.model'
-import { BehaviorSubject, catchError, EMPTY } from 'rxjs'
+import { Login, AuthResponse, MyProfile } from '../models/auth.model'
+import { BehaviorSubject, catchError, EMPTY, map } from 'rxjs'
 import { NotificationService } from './notification.service'
 import { Router } from '@angular/router'
-
-interface AuthResponse {
-  id: number
-  email: string
-  password: string
-  'jwt-token': string
-}
 
 @Injectable()
 export class AuthService {
@@ -27,8 +20,10 @@ export class AuthService {
     this.resolveAuthRequest = resolve
   })
 
-  isAuth$ = new BehaviorSubject<boolean>(false)
-  token$ = new BehaviorSubject<string | null>(null)
+  private _myProfile$: BehaviorSubject<MyProfile> = new BehaviorSubject<MyProfile>({} as MyProfile)
+  myProfile$ = this._myProfile$.asObservable()
+  private _isAuth$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  isAuth$ = this._isAuth$.asObservable()
 
   login(payload: Partial<Login>) {
     this.http
@@ -36,25 +31,74 @@ export class AuthService {
       .pipe(catchError(this.errorHandler.bind(this)))
       .subscribe(res => {
         localStorage.setItem('jwt-token', res['jwt-token'])
-        this.isAuth$.next(true)
+        this._isAuth$.next(true)
         this.router.navigate([''])
       })
   }
 
   logout() {
     localStorage.removeItem('jwt-token')
-    this.isAuth$.next(false)
-    this.router.navigate(['login'])
+    localStorage.removeItem('myID')
+    this._isAuth$.next(false)
+    this.router.navigate(['/login'])
   }
 
   me() {
     this.resolveAuthRequest()
-    this.token$.next(localStorage.getItem('jwt-token'))
-    this.isAuth$.next(this.token$.getValue() !== null)
+    if (localStorage.getItem('jwt-token')) {
+      this._isAuth$.next(true)
+      this.http
+        .get<MyProfile>(`${environment.baseUrl}/profile/me`)
+        .pipe(catchError(this.meError))
+        .subscribe(profile => {
+          localStorage.setItem('myID', String(profile.id))
+          this._myProfile$.next(profile)
+        })
+    } else {
+      this._isAuth$.next(false)
+      this.router.navigate(['/login'])
+    }
+  }
+
+  changeProfileImage(newImage: string) {
+    this.http
+      .patch<MyProfile>(`${environment.baseUrl}/profile/changeImage`, newImage)
+      .pipe(
+        catchError(this.errorHandler.bind(this)),
+        map(res => {
+          const actualProfile = this._myProfile$.getValue()
+          actualProfile.picture = newImage
+          return actualProfile
+        })
+      )
+      .subscribe(res => {
+        this._myProfile$.next(res)
+      })
+  }
+
+  changeProfileName(newName: string) {
+    this.http
+      .patch<MyProfile>(`${environment.baseUrl}/profile/changeUsername`, newName)
+      .pipe(
+        catchError(this.errorHandler.bind(this)),
+        map(res => {
+          const actualProfile = this._myProfile$.getValue()
+          actualProfile.username = newName
+          return actualProfile
+        })
+      )
+      .subscribe(res => {
+        this._myProfile$.next(res)
+      })
   }
 
   private errorHandler(error: HttpErrorResponse) {
-    this.notificationService.handleError(error.message)
+    this.notificationService.handleError(error.error)
+    return EMPTY
+  }
+
+  private meError() {
+    localStorage.removeItem('jwt-token')
     return EMPTY
   }
 }

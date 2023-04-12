@@ -1,1 +1,12 @@
-
+.toolbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+}
+.mainBox{
+  width: 85%;
+  margin: 0 auto;
+  padding-top: 64px;
+}

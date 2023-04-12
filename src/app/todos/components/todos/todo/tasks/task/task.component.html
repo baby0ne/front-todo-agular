@@ -1,6 +1,11 @@
 <div class="task">
   <div class="container">
-    <input type="checkbox" (click)="updateTaskActiveHandler($event)" [checked]="task.active" />
+    <mat-checkbox
+      (change)="updateTaskActiveHandler($event)"
+      [checked]="task.active"
+      color="primary"
+      class="checkBox"
+    ></mat-checkbox>
     <ng-template #title>
       <h3
         (dblclick)="activateEditMode()"
@@ -9,13 +14,18 @@
         {{ task.task }}
       </h3>
     </ng-template>
-    <input
-      *ngIf="isEditMode; else title"
-      (blur)="editTaskTitleHandler()"
-      (keyup.enter)="editTaskTitleHandler()"
-      [(ngModel)]="newTitle"
-      autofocus
-    />
+    <mat-form-field *ngIf="isEditMode; else title" class="changeTitleInput" autofocus>
+      <mat-label>New task title</mat-label>
+      <input
+        matInput
+        [(ngModel)]="newTitle"
+        (keyup.enter)="editTaskTitleHandler()"
+        (blur)="editTaskTitleHandler()"
+        autofocus
+      />
+    </mat-form-field>
   </div>
-  <button (click)="deleteTaskHandler()" class="taskButton">&times;</button>
+  <button mat-mini-fab color="primary" (click)="deleteTaskHandler()">
+    <mat-icon>delete</mat-icon>
+  </button>
 </div>

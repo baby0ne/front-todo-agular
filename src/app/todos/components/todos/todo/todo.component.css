@@ -1,14 +1,15 @@
 .wrapper{
   background: #fff;
-  max-width: 400px;
-  min-width: 400px;
+  max-width: 100%;
   padding: 25px;
   border-radius: 5px;
   box-shadow: 0 10px 15px rgba(0,0,0,0.1);
 }
-.wrapper header{
+.wrapper h1{
   font-size: 30px;
   font-weight: 600;
+  cursor: pointer;
+  font-family: 'Josefin Sans', sans-serif;
 }
 .headerInputField{
   width: 100%;
@@ -21,37 +22,17 @@
   display: flex;
   height: 45px;
 }
+.changeTitleInput{
+  font-size: 16px;
+  margin-right: 10px;
+  width: 80%;
+}
+.taskTitleInput{
+  width: 80%;
+  font-size: 16px;
+  margin-right: 10px;
+}
 .todoHeader{
   display: flex;
   justify-content: space-between;
-}
-input{
-  width: 85%;
-  height: 100%;
-  outline: none;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  font-size: 17px;
-  padding-left: 15px;
-  transition: all 0.3s ease;
-}
-.wrapper input:focus{
-  border-color: #dc3535;
-}
-.taskButton{
-  width: 50px;
-  height: 100%;
-  border: none;
-  color: #fff;
-  margin-left: 5px;
-  outline: none;
-  background: #dc3535;
-  cursor: pointer;
-  border-radius: 3px;
-  font-size: 35px;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-}
-button:hover {
-  opacity: 1;
 }

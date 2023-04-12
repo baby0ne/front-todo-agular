@@ -1,45 +1,35 @@
-<div class="login">
+<mat-card class="login">
   <div class="login-screen">
     <div class="app-title">
       <h1>Login</h1>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" (keydown.enter)="onLoginSubmit()">
       <div class="login-form">
-        <div class="control-group">
-          <input
-            type="text"
-            class="login-field"
-            value=""
-            placeholder="Email"
-            id="login-name"
-            formControlName="email"
-          />
-          <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="error">
-            <div *ngIf="email!.errors?.['required']">Email is required.</div>
-            <div *ngIf="email!.errors?.['pattern']">Email is not correct.</div>
-          </div>
-        </div>
+        <mat-form-field class="formInput">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" />
+          <mat-error *ngIf="email!.errors?.['pattern']">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="email!.errors?.['required']"> Email is required </mat-error>
+        </mat-form-field>
 
         <div class="control-group">
-          <input
-            type="password"
-            class="login-field"
-            value=""
-            placeholder="Password"
-            id="login-pass"
-            formControlName="password"
-          />
-          <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="error">
-            <div *ngIf="password!.errors?.['required']">Password is required.</div>
-            <div *ngIf="password!.errors?.['minlength']">
-              Password must be at least 8 characters long.
-            </div>
-          </div>
+          <mat-form-field class="formInput">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" />
+            <mat-error *ngIf="password!.errors?.['required']">Password is required.</mat-error>
+            <mat-error *ngIf="password!.errors?.['minlength']">
+              Password must be at least 8 characters long.</mat-error
+            >
+          </mat-form-field>
         </div>
         <button
-          class="btn btn-primary btn-large btn-block"
+          mat-raised-button
+          color="primary"
           type="submit"
-          [disabled]="loginForm.invalid"
+          [disabled]="loginForm.invalid || (isLoading$ | async)"
+          class="formButton"
         >
           Login
         </button>
@@ -49,4 +39,4 @@
       </div>
     </form>
   </div>
-</div>
+</mat-card>

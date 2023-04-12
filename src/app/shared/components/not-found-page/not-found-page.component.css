@@ -1,0 +1,16 @@
+.notFoundPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+h1{
+  font-size: 150px;
+  margin-top: 40px;
+}
+.notFoundPage h1, h2{
+  font-family: "Josefin Sans", serif;
+}
+span{
+  color: #3f51b5;
+}

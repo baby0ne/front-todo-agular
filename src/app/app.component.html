@@ -1,2 +1,12 @@
-<todo-notify></todo-notify>
-<router-outlet></router-outlet>
+<div class="toolbar">
+  <todo-navigation></todo-navigation>
+  <mat-progress-bar
+    mode="indeterminate"
+    color="primary"
+    *ngIf="isLoading$ | async"
+    style="position: absolute"
+  ></mat-progress-bar>
+</div>
+<div class="mainBox">
+  <router-outlet></router-outlet>
+</div>

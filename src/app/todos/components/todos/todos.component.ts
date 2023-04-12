@@ -7,12 +7,12 @@ import { AuthService } from '../../../core/services/auth.service'
 @Component({
   selector: 'todo-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.css'],
+  styleUrls: ['./todos.component.css', '../../../shared/styles.css'],
 })
 export class TodosComponent implements OnInit {
   constructor(private todosService: TodosService, private authService: AuthService) {}
 
-  todos$: Observable<TodoDomainType[]> = new Observable<TodoDomainType[]>()
+  todos$!: Observable<TodoDomainType[]>
   todoTitle!: string
 
   ngOnInit() {

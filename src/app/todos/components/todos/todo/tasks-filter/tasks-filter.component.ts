@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { FilterType } from '../../../../models/todos.model'
+import { MatButtonToggleChange } from '@angular/material/button-toggle'
 
 @Component({
   selector: 'todo-tasks-filter',
@@ -12,5 +13,9 @@ export class TasksFilterComponent {
 
   changeFilterHandler(filter: FilterType) {
     this.changeFilterEvent.emit(filter)
+  }
+
+  onToggleGroupChange(event: MatButtonToggleChange) {
+    this.changeFilterEvent.emit(event.value)
   }
 }

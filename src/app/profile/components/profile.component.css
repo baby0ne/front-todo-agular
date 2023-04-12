@@ -1,0 +1,18 @@
+.changeTitleInput{
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+.logoutButton{
+  font-size: 18px;
+}
+.imageUpload{
+  font-size: 50px;
+  position: absolute;
+  top: 280px;
+  right: 90px;
+  cursor: pointer;
+}
+.noneInput{
+  display: none;
+}
+

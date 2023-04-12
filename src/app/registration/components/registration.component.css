@@ -1,0 +1,37 @@
+.registration {
+  margin: 50px auto;
+  width: 400px;
+}
+.registration-screen {
+  background-color: #FFF;
+  padding: 20px;
+  border-radius: 5px
+}
+
+.app-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.app-title h1{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.login-form {
+  text-align: center;
+}
+.control-group {
+  margin-bottom: 30px;
+}
+
+.toLogin {
+  color: #000;
+  margin-top: 15px;
+}
+
+.toLogin a{
+  color: #000;
+}
+.toLogin a:hover {
+  color: #848484;
+}

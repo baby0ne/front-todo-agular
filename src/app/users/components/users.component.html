@@ -1,0 +1,36 @@
+<div class="usersPage">
+  <div class="filterField">
+    <div>
+      <mat-form-field class="usersFindInput">
+        <mat-label>User Search</mat-label>
+        <input
+          matInput
+          placeholder="Enter username..."
+          [(ngModel)]="userFindValue"
+          (keyup.enter)="findUserHandler()"
+        />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="findUserHandler()">Find</button>
+    </div>
+    <mat-paginator
+      [length]="usersCount$ | async"
+      [pageSizeOptions]="[5, 7, 10]"
+      (page)="changePageHandler($event)"
+    ></mat-paginator>
+  </div>
+  <mat-list role="list" class="usersContainer">
+    <mat-card *ngFor="let user of users$ | async" class="userContainer">
+      <mat-list-item role="listitem">
+        <a routerLink="../user-profile/{{ user.id }}">
+          <div
+            [ngStyle]="{ 'background-image': 'url(' + user.picture + ')' }"
+            class="miniAva"
+          ></div>
+        </a>
+        <a routerLink="../user-profile/{{ user.id }}">
+          <p>{{ user.username }}</p>
+        </a>
+      </mat-list-item>
+    </mat-card>
+  </mat-list>
+</div>

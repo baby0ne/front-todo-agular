@@ -1,15 +1,25 @@
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from '../../../core/services/auth.service'
-import { RegistrationService } from '../../services/registration.service'
+import { AuthService } from '../../core/services/auth.service'
+import { RegistrationService } from '../services/registration.service'
+import { Router } from '@angular/router'
+import { Observable } from 'rxjs'
+import { AppService } from '../../app.service'
 
 @Component({
   selector: 'todo-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css'],
+  styleUrls: ['./registration.component.css', '../../shared/styles.css'],
 })
 export class RegistrationComponent {
-  constructor(private authService: AuthService, private registrationService: RegistrationService) {}
+  isLoading$: Observable<boolean> = new Observable<boolean>()
+
+  constructor(
+    private authService: AuthService,
+    private registrationService: RegistrationService,
+    private appService: AppService
+  ) {}
+
   registrationForm = new FormGroup({
     email: new FormControl<string>('', {
       nonNullable: true,
@@ -24,7 +34,7 @@ export class RegistrationComponent {
     }),
     repeatPassword: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(8)],
+      validators: [Validators.required],
     }),
   })
 
@@ -41,6 +51,8 @@ export class RegistrationComponent {
   }
 
   onRegistrationSubmit() {
+    this.isLoading$ = this.appService.isLoading$
+
     this.registrationService.registration({
       username: this.registrationForm.value.email,
       password: this.registrationForm.value.password,

@@ -4,10 +4,11 @@ import { AuthService } from './services/auth.service'
 import { NotificationService } from './services/notification.service'
 import { AuthInterceptor } from './interceptors/auth-interceptor.interceptor'
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [CommonModule, MatSnackBarModule],
   providers: [
     AuthService,
     NotificationService,

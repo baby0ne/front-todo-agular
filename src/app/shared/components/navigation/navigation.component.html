@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="toolbar">
+  <span>Todolist 1.0</span>
+  <div
+    class="menuButton"
+    [ngClass]="{ menuButton: isAuth$ | async, menuButtonNone: (isAuth$ | async) === false }"
+  >
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="profile">
+        <mat-icon>account_circle</mat-icon>
+        <span>My profile</span>
+      </button>
+      <button mat-menu-item routerLink="">
+        <mat-icon>assignment_turned_in</mat-icon>
+        <span>My todolists</span>
+      </button>
+      <button mat-menu-item routerLink="users">
+        <mat-icon>supervised_user_circle</mat-icon>
+        <span>Users</span>
+      </button>
+      <button mat-menu-item routerLink="messages">
+        <mat-icon>message</mat-icon>
+        <span>Messages</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
