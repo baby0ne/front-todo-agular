@@ -1,0 +1,8 @@
+<todo-sender
+  *ngFor="let sender of senders"
+  [sender]="sender"
+  (click)="changeDialogsIdHandler(sender.id)"
+  class="sender"
+  [ngClass]="{ activeSender: sender.id == dialogsId }"
+  [routerLink]="['/messages', sender.id]"
+></todo-sender>

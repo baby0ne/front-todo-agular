@@ -18,7 +18,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   profile = {} as MyProfile
 
   ngOnInit() {
-    console.log(this.activatedRoute.snapshot.params)
     this.profileService.getProfile(this.activatedRoute.snapshot.params['id'])
 
     this.profile$ = this.profileService.profile$

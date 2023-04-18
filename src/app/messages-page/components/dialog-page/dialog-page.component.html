@@ -1,0 +1,14 @@
+<div *ngFor="let message of messages" [ngClass]="{ left: !message.my, right: message.my }">
+  <div>
+    <p>{{ message.text }}</p>
+  </div>
+</div>
+<div class="writerMessage">
+  <mat-form-field class="messagesInput">
+    <mat-label>Message</mat-label>
+    <input matInput placeholder="Write your message..." [(ngModel)]="message" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="sendMessageHandler()" class="sendButton">
+    Send
+  </button>
+</div>

@@ -28,6 +28,11 @@ const routes: Routes = [
       import('../app/messages-page/messages-page.module').then(m => m.MessagesPageModule),
   },
   {
+    path: `messages/:id`,
+    loadChildren: () =>
+      import('../app/messages-page/messages-page.module').then(m => m.MessagesPageModule),
+  },
+  {
     path: `users`,
     loadChildren: () => import('../app/users/users.module').then(m => m.UsersModule),
   },

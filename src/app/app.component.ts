@@ -12,9 +12,11 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private appService: AppService) {}
 
   isLoading$!: Observable<boolean>
+  isAuth$!: Observable<boolean>
 
   ngOnInit() {
     this.isLoading$ = this.appService.isLoading$
+    this.isAuth$ = this.authService.isAuth$
     this.authService.me()
   }
 }

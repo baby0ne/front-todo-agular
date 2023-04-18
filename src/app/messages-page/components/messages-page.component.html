@@ -1,1 +1,25 @@
-<p>messages</p>
+<div class="mainBox">
+  <div class="container">
+    <div class="usersList">
+      <div>
+        <mat-form-field class="findInput">
+          <mat-label>Search</mat-label>
+          <input matInput placeholder="Write the name of the person you are looking for..." />
+        </mat-form-field>
+      </div>
+      <todo-senders
+        [senders]="senders"
+        class="senders"
+        (changeDialogsIdEvent)="changeDialogsIdHandler($event)"
+      ></todo-senders>
+    </div>
+    <div class="messagesList">
+      <div class="dialogsPlug" *ngIf="!dialogsId; else dialogPage">
+        <p>Select the user you want to chat with...</p>
+      </div>
+      <ng-template #dialogPage>
+        <todo-dialog-page [messages]="messages[dialogsId]"></todo-dialog-page>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,14 @@
           <span>{{ profile.taskCount }}/{{ profile.taskCompleted }}</span>
         </p>
       </div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="writeMessageButton"
+        [routerLink]="['../../messages', profile.id]"
+      >
+        To write a message
+      </button>
     </div>
   </mat-card>
 </div>

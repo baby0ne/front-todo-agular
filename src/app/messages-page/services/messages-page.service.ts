@@ -8,6 +8,11 @@ import { environment } from '../../../environments/environment'
 export class MessagesPageService {
   constructor(private http: HttpClient) {}
 
+  getSenders() {
+    this.http.get(`${environment.baseUrl}/messages`).subscribe(res => {
+      debugger
+    })
+  }
   getMessages() {
     this.http
       .get(`${environment.baseUrl}/messages/${localStorage.getItem('myID')}/18`)

@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpHeaders,
 } from '@angular/common/http'
-import { finalize, Observable, tap } from 'rxjs'
+import { Observable, tap } from 'rxjs'
 import { AppService } from '../../app.service'
 
 @Injectable()

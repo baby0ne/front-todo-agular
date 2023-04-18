@@ -9,9 +9,19 @@ import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms'
+import { MatListModule } from '@angular/material/list'
+import { SenderComponent } from './components/senders/sender/sender.component'
+import { DialogPageComponent } from './components/dialog-page/dialog-page.component'
+import { SendersComponent } from './components/senders/senders.component'
 
 @NgModule({
-  declarations: [MessagesPageComponent],
+  declarations: [
+    MessagesPageComponent,
+    SenderComponent,
+    SendersComponent,
+    SenderComponent,
+    DialogPageComponent,
+  ],
   imports: [
     CommonModule,
     MessagesPageRoutingModule,
@@ -21,6 +31,7 @@ import { FormsModule } from '@angular/forms'
     MatButtonModule,
     MatIconModule,
     FormsModule,
+    MatListModule,
   ],
 })
 export class MessagesPageModule {}

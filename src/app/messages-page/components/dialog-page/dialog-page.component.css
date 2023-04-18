@@ -1,0 +1,29 @@
+.left{
+  text-align: left;
+}
+.right{
+  text-align: right;
+}
+.right p{
+  background-color: #3f51b5;
+  color: white;
+}
+p{
+  display: inline-block;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 5px;
+  min-width: 60px;
+}
+.writerMessage {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.messagesInput{
+  width: 85%;
+  padding-right: 10px;
+}
+.sendButton{
+  width: 10%;
+}

@@ -21,7 +21,6 @@ export class UserProfileService {
     if (String(userId) === localStorage.getItem('myID')) {
       this.router.navigate(['profile'])
     } else {
-      console.log(123, userId)
       this.http
         .get<Profile>(`${environment.baseUrl}/profile/${userId}`)
         .pipe(catchError(this.errorHandler.bind(this)))

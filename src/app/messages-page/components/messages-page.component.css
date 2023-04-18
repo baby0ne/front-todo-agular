@@ -1,0 +1,54 @@
+.mainBox{
+  margin-top: 20px;
+}
+.container{
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 10px 10px 10px 0;
+  height: 85vh;
+  display: flex;
+}
+.findInput{
+  width: 100%;
+  padding-left: 10px;
+}
+.usersList{
+  width: 35%;
+  margin-right: 12px;
+}
+.messagesList{
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  width: 65%;
+  height: 100%;
+  padding: 20px;
+  position: relative;
+}
+.dialogsPlug{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  text-align: center;
+  height: 100%;
+}
+.senders{
+  display: block;
+  overflow:scroll;
+  overflow-x:hidden;
+  height: 91%;
+  padding-left: 10px;
+}
+.senders::-webkit-scrollbar {
+  width: 7px;               /* ширина scrollbar */
+}
+.senders::-webkit-scrollbar-track {
+  background: #b3b2b2;        /* цвет дорожки */
+  border-radius: 20px;
+}
+.senders::-webkit-scrollbar-thumb {
+  background-color: #3f51b5;    /* цвет плашки */
+  border-radius: 20px;       /* закругления плашки */
+}
+
